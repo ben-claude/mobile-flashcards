@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "sdkVersion": "20.0.0",
+    "orientation": "portrait",
+    "name": "FlashCards",
+    "description": "The best flashcards app in the world.",
+    "slug": "flashcards",
+    "version": "1.0",
+    "icon": "https://png.icons8.com/cards/Dusk_Wired/64",
+    "notification": {
+      "icon": "https://png.icons8.com/cards/Dusk_Wired/64"
+    },
+    "ios": {
+     "bundleIdentifier": "org.flashcards.exp"
+    },
+    "android": {
+     "package": "org.flashcards.exp"
+    }
+  }
+}
