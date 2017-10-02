@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { View, TextInput, StyleSheet, KeyboardAvoidingView, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { deckAddCard } from '../actions'
@@ -42,6 +42,7 @@ class NewQuestion extends React.Component {
         .then(() => {
           this.props.deckAddCard(deckId, card)
           this.reset()
+          Keyboard.dismiss()
           goBack()
         })
     }

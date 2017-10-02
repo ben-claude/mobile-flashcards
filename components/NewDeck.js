@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Keyboard } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -35,6 +35,7 @@ class NewDeck extends React.Component {
         .then(() => {
           this.props.decksAdd(deckTitle)
           this.reset()
+          Keyboard.dismiss()
           this.props.navigation.navigate(
             'DeckDetail',
             { deckId: deckTitle },
