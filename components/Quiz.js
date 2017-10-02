@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import TextButton from './TextButton'
 import Score from './Score'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 import { white, red, green } from '../utils/colors'
 
 function emptyState() {
@@ -50,6 +51,9 @@ class Quiz extends React.Component {
       )
     }
     if (cardIndex === questions.length) {
+      // reset notification for today and schedule again for tomorrow
+      clearLocalNotification()
+        .then(setLocalNotification)
       return <Score
         score={(score / questions.length * 100).toFixed(0)}
         onDeckPressed={goBack}

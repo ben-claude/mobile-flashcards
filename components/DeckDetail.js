@@ -8,7 +8,6 @@ import Deck from './Deck'
 import TextButton from './TextButton'
 import { removeDeck }  from '../utils/api'
 import { gray, black, white } from '../utils/colors'
-import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class DeckDetail extends React.Component {
   static propTypes = {
@@ -41,10 +40,6 @@ class DeckDetail extends React.Component {
       })
   }
   onStartQuiz = () => {
-    // reset notification for today and schedule again for tomorrow
-    clearLocalNotification()
-      .then(setLocalNotification)
-    //
     this.props.navigation.navigate(
       'Quiz',
       { deckId: this.props.deck.title },
