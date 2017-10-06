@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native'
 
 // use an AsyncStorage key identifying both our app (flashcards) and the value content (decks)
 const STORAGE_KEY_DECKS = 'flashcards:decks'
+const STORAGE_KEY_INTRO = 'flashcards:intro'
 
 function generateDummyData() {
   const data = {
@@ -96,5 +97,36 @@ export function removeDeck(deckId) {
       delete data[deckId]
       AsyncStorage.setItem(STORAGE_KEY_DECKS, JSON.stringify(data))
     })
+}
+
+function generateEmptyIntro() {
+  const data = {
+    remainingCount: 3, // stop showing the "app intro" after three 'skip' from user
+  }
+  AsyncStorage.setItem(STORAGE_KEY_INTRO, JSON.stringify(data))
+  return data
+}
+
+export function getIntro() {
+  return AsyncStorage.getItem(STORAGE_KEY_INTRO)
+    .then(results => {
+      const data = results === null 
+        ? generateEmptyIntro() 
+        : JSON.parse(results)
+      return data
+    })
+}
+
+export function setIntroRemainingCount(remainingCount) {
+  return getIntro().then(intro => {
+    AsyncStorage.setItem(STORAGE_KEY_INTRO, JSON.stringify({
+      ...intro,
+      remainingCount,
+    }))
+  })
+}
+
+export function removeIntro() {
+  return AsyncStorage.removeItem(STORAGE_KEY_INTRO)
 }
 

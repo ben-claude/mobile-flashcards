@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { purple } from '../utils/colors'
+import { Text, TouchableOpacity } from 'react-native'
+import styles from './styles'
 
 export default function TextButton ({ children, onPress, buttonStyle = {}, textStyle = {}, ...buttonProps }) {
   return (
@@ -11,19 +11,4 @@ export default function TextButton ({ children, onPress, buttonStyle = {}, textS
     </TouchableOpacity>
   )
 } 
-
-const styles = StyleSheet.create({
-  button: {
-    padding: 10,
-    margin: 5,
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderWidth: 1,
-    borderRadius: 2,
-  },
-  text: {
-    fontSize: 22,
-    textAlign: 'center',
-  },
-}) 
 

@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import TextButton from './TextButton'
-import Score from './Score'
-import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
-import { white, red, green } from '../utils/colors'
+import TextButton from '../TextButton'
+import Score from '../Score'
+import { clearLocalNotification, setLocalNotification } from '../../utils/helpers'
+import { fontSize } from '../../styles/common'
+import styles from './styles'
 
 function emptyState() {
   return {
@@ -63,7 +64,7 @@ class Quiz extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={{ fontSize: 20 }}>{`${cardIndex + 1} / ${questions.length}`}</Text>
+          <Text style={{ fontSize }}>{`${cardIndex + 1} / ${questions.length}`}</Text>
         </View>
         <View style={styles.quizContainer}>
           <Text style={styles.text}>{flip ? card.answer : card.question}</Text>
@@ -84,58 +85,10 @@ class Quiz extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: white,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: 10,
-  },
-  quizContainer: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    flex: 2,
-    alignItems: 'stretch',
-  },
-  flipButton: {
-    borderWidth: 0,
-  },
-  flipButtonText: {
-    color: red,
-  },
-  correctButton: {
-    backgroundColor: green,
-    borderWidth: 0,
-  },
-  correctButtonText: {
-    color: white,
-  },
-  incorrectButton: {
-    backgroundColor: red,
-    borderWidth: 0,
-  },
-  incorrectButtonText: {
-    color: white,
-  },
-  text: {
-    fontSize: 30,
-    textAlign: 'center',
-  },
-})
-
-function mapStateToProps(state, { navigation }) {
+function mapStateToProps({ decks }, { navigation }) {
   const { deckId } = navigation.state.params
   return {
-    deck: state[deckId],
+    deck: decks[deckId],
     goBack: () => navigation.goBack(),
   }
 }

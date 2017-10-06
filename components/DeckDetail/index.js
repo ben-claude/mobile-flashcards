@@ -1,13 +1,13 @@
 import React from 'react'
-import { View, StyleSheet, Animated } from 'react-native'
+import { View, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
 import PropTypes from 'prop-types'
-import { decksRemove } from '../actions'
-import Deck from './Deck'
-import TextButton from './TextButton'
-import { removeDeck }  from '../utils/api'
-import { gray, black, white } from '../utils/colors'
+import { decksRemove } from '../../actions'
+import Deck from '../Deck'
+import TextButton from '../TextButton'
+import { removeDeck }  from '../../utils/api'
+import styles from './styles'
 
 class DeckDetail extends React.Component {
   static propTypes = {
@@ -69,25 +69,10 @@ class DeckDetail extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: white,
-  },
-  quizButton: {
-    backgroundColor: black,
-  },
-  quizButtonText:{
-    color: white,
-  },
-}) 
-
-function mapStateToProps(state, { navigation }) {
+function mapStateToProps({ decks }, { navigation }) {
   const { deckId } = navigation.state.params
   return {
-    deck: state[deckId],
+    deck: decks[deckId],
     goBack: () => navigation.goBack(),
   }
 }

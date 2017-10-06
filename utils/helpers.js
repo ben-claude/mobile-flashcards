@@ -1,14 +1,14 @@
 import { AsyncStorage } from 'react-native'
 import { Notifications, Permissions } from 'expo'
 
-const NOTIFICATION_KEY = 'flashcards:notifications'
+const STORAGE_KEY_NOTIFICATION = 'flashcards:notifications'
 
 export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export function clearLocalNotification() {
-  return AsyncStorage.removeItem(NOTIFICATION_KEY)
+  return AsyncStorage.removeItem(STORAGE_KEY_NOTIFICATION)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
@@ -29,7 +29,7 @@ function createNotification() {
 }
 
 export function setLocalNotification() {
-  AsyncStorage.getItem(NOTIFICATION_KEY)
+  AsyncStorage.getItem(STORAGE_KEY_NOTIFICATION)
     .then(JSON.parse)
     .then((data) => {
       if (data === null) {
@@ -41,7 +41,7 @@ export function setLocalNotification() {
               let tomorrow = new Date()
               tomorrow.setDate(tomorrow.getDate() + 1)
               tomorrow.setHours(20)
-              tomorrow.setMintutes(0)
+              tomorrow.setMinutes(0)
               //
               Notifications.scheduleLocalNotificationsAsync(
                 createNotification(),
@@ -51,7 +51,7 @@ export function setLocalNotification() {
                 }
               )
               //
-              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+              AsyncStorage.setItem(STORAGE_KEY_NOTIFICATION, JSON.stringify(true))
             }
           })
       }

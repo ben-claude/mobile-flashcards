@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import TextButton from './TextButton'
-import { white } from '../utils/colors'
+import TextButton from '../TextButton'
+import styles from './styles'
 
 class Score extends React.Component {
   static propTypes = {
@@ -29,24 +29,6 @@ class Score extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: white,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 30,
-    textAlign: 'center',
-  },
-})
 
 export default Score
 

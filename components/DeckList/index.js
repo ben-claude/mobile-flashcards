@@ -1,11 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { decksReceive } from '../actions'
-import Deck from './Deck'
-import { getDecks, removeDecks } from '../utils/api'
-import { white, lightGray } from '../utils/colors'
+import { decksReceive } from '../../actions'
+import Deck from '../Deck'
+import { getDecks, removeDecks } from '../../utils/api'
+import styles from './styles'
 
 class DeckList extends React.Component {
   static propTypes = {
@@ -47,20 +47,7 @@ class DeckList extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: white,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-  },
-  separator: {
-    height: 2,
-    backgroundColor: lightGray,
-  },
-})
-
-function mapStateToProps(decks, props) {
+function mapStateToProps({ decks }, props) {
   return {
     decks
   }

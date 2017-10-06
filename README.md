@@ -9,3 +9,7 @@ allows users to study collections of flashcards
 * iOS: `exp build:ios`
 * Android: `exp build:android`
 
+### Tested on
+* iOS in a simulator
+* Android on a real device
+

@@ -1,45 +1,49 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Keyboard } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import { View, TextInput, KeyboardAvoidingView, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import TextButton from './TextButton'
-import FormErrors, { FormIsValid }  from './FormErrors'
-import { decksAdd } from '../actions'
-import { saveDeckTitle }  from '../utils/api'
-import { black, white, gray } from '../utils/colors'
+import { deckAddCard } from '../../actions'
+import TextButton  from '../TextButton'
+import FormErrors, { FormIsValid }  from '../FormErrors'
+import { addCardToDeck } from '../../utils/api'
+import styles from './styles'
 
 const emptyState = () => {
   return {
-    deckTitle: '',
-    //
+    question: '',
+    answer: '',
     fieldsValid: {
-      deckTitle: false,
+      question: false,
+      answer: false,
     },
     formErrors: {
-      deckTitle: '',
+      question: '',
+      answer: '',
     },
     formValid: false,
   }
 }
 
-class NewDeck extends React.Component {
+class NewQuestion extends React.Component {
   static propTypes = {
+    navigation: PropTypes.object.isRequired,
   }
   state = emptyState()
   reset = () => this.setState(emptyState())
   submit = () => {
-    const deckTitle = this.state.deckTitle
     if (this.state.formValid) {
-      saveDeckTitle(deckTitle)
+      const { deckId, goBack } = this.props
+      const { question, answer } = this.state
+      const card = {
+        question,
+        answer,
+      }
+      addCardToDeck(deckId, card)
         .then(() => {
-          this.props.decksAdd(deckTitle)
+          this.props.deckAddCard(deckId, card)
           this.reset()
           Keyboard.dismiss()
-          this.props.navigation.navigate(
-            'DeckDetail',
-            { deckId: deckTitle },
-          )
+          goBack()
         })
     }
   }
@@ -65,11 +69,15 @@ class NewDeck extends React.Component {
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <FormErrors errors={this.state.formErrors} />
-        <Text style={styles.text}>What it the title of your new deck ?</Text>
         <TextInput style={styles.textInput}
-          onChangeText = {value => this.handleUserInput('deckTitle', value)}
-          value={this.state.deckTitle}
-          placeholder='Deck Title'
+          onChangeText = {value => this.handleUserInput('question', value)}
+          value={this.state.question}
+          placeholder='Question'
+        />
+        <TextInput style={styles.textInput}
+          onChangeText = {value => this.handleUserInput('answer', value)}
+          value={this.state.answer}
+          placeholder='Answer'
         />
         <TextButton
           buttonStyle={styles.submitButton}
@@ -84,40 +92,17 @@ class NewDeck extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: white,
-    padding: 20,
-  },
-  text: {
-    fontSize: 20,
-    margin: 5,
-  },
-  textInput: {
-    alignSelf: 'stretch',
-    padding: 10,
-    margin: 5,
-    borderWidth: 1,
-    borderColor: gray, 
-  },
-  submitButton: {
-    backgroundColor: black,
-  },
-  submitButtonText:{
-    color: white,
+function mapStateToProps({ decks }, { navigation }) {
+  const { deckId } = navigation.state.params
+  return {
+    deckId,
+    goBack: () => navigation.goBack(),
   }
-})
-
-function mapStateToProps(decks, props) {
-  return {}
 }
 
 export default connect(
-  mapStateToProps, { 
-    decksAdd,
+  mapStateToProps, {
+    deckAddCard,
   }
-)(NewDeck)
+)(NewQuestion) 
 

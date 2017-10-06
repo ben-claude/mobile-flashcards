@@ -10,6 +10,9 @@
     "notification": {
       "icon": "https://png.icons8.com/cards/Dusk_Wired/64"
     },
+    "loading": {
+      "icon": "./assets/splash.png"
+    },
     "ios": {
      "bundleIdentifier": "org.flashcards.exp"
     },
